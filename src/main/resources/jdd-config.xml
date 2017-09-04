@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="classpath:cotisations-non-imposables.xml" />
+	<import resource="classpath:cotisations-imposables.xml" />
+
+	<bean id="bulletin1" class="dev.paie.entite.BulletinSalaire">
+		<property name="primeExceptionnelle" value="1000"></property>
+		<property name="remunerationEmploye" ref="entitee"></property>
+	</bean>
+	<bean id="entitee" class="dev.paie.entite.RemunerationEmploye">
+		<property name="grade" ref="entite"></property>
+		<property name="profilRemuneration" ref="profilrem"></property>
+		<property name="matricule" value="M01"></property>
+		<property name="entreprise" ref="entiteEntreprise"></property>
+	</bean>
+	<bean id="entite" class="dev.paie.entite.Grade">
+		<property name="nbHeuresBase" value="151.67"></property>
+		<property name="tauxBase" value="11.0984"></property>
+	</bean>
+
+	<bean id="profilRemuneration1" class="dev.paie.entite.ProfilRemuneration">
+		<property name="cotisationsImposables">
+			<list>
+				<ref bean="sp01" />
+				<ref bean="sp02" />
+			</list>
+		</property>
+		<property name="cotisationsNonImposables">
+			<list>
+				<ref bean="ep01" />
+				<ref bean="ep02" />
+				<ref bean="ep03" />
+				<ref bean="ep04" />
+				<ref bean="ep05" />
+				<ref bean="ep06" />
+				<ref bean="ep07" />
+				<ref bean="ep12" />
+				<ref bean="ep19" />
+				<ref bean="ep20" />
+				<ref bean="epr1" />
+				<ref bean="e900" />
+				<ref bean="ep28" />
+				<ref bean="ep37" />
+			</list>
+		</property>
+	</bean>
+
+
+	<bean id="bulletin1:remuneration:entreprise" class="dev.paie.entite.Entreprise">
+		<property name="siret" value="80966785000022"></property>
+		<property name="denomination" value="Dev Entreprise"></property>
+		<property name="codeNaf" value="6202A"></property>
+	</bean>
+</beans>
+	
