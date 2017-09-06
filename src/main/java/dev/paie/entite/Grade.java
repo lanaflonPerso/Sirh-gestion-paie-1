@@ -9,6 +9,7 @@ public class Grade {
 	private BigDecimal nbHeuresBase;
 	private BigDecimal tauxBase;
 	
+	
 	public String getCode() {
 		return code;
 	}
