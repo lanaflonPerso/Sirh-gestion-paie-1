@@ -12,9 +12,9 @@
 	</bean>
 	<bean id="entitee" class="dev.paie.entite.RemunerationEmploye">
 		<property name="grade" ref="entite"></property>
-		<property name="profilRemuneration" ref="profilrem"></property>
+		<property name="profilRemuneration" ref="profilRemuneration1"></property>
 		<property name="matricule" value="M01"></property>
-		<property name="entreprise" ref="entiteEntreprise"></property>
+		<property name="entreprise" ref="bulletin1:remuneration:entreprise"></property>
 	</bean>
 	<bean id="entite" class="dev.paie.entite.Grade">
 		<property name="nbHeuresBase" value="151.67"></property>
