@@ -1,6 +1,9 @@
 package dev.paie.web.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,39 +43,29 @@ public class RemunerationEmployeController {
 
 		mv.addObject("profil", profilRepository.findAll());
 		return mv;
-
 	}
-	
 
-	@RequestMapping(method = RequestMethod.GET, path = "/creer")
-	public ModelAndView creerEmploye(HttpServletRequest request) {
-
-		String gradeIdString = request.getParameter("gradeId");
-		Integer gradeId = Integer.parseInt(gradeIdString);
-		Grade grade = gradeRepository.findOne(gradeId);
-
-		String entrepriseIdString = request.getParameter("entrepriseId");
-		Integer entrepriseId = Integer.parseInt(entrepriseIdString);
-		Entreprise entreprise = entrepriseRepository.findOne(entrepriseId);
-
-		RemunerationEmploye employe = new RemunerationEmploye();
-		employe.setGrade(grade);
-		employe.setEntreprise(entreprise);
-		employe.setProfilRemuneration(null);
-
+	@RequestMapping(method = RequestMethod.POST, path = "/creer")
+	public void creerEmploye(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("employes/creerEmploye");
-		mv.addObject("prefixMatricule", "M00");
-		return mv;
+
+		RemunerationEmploye employe = new RemunerationEmploye();
+		employe.setMatricule(request.getParameter("matricule"));
+		employe.setGrade(gradeRepository.findOne(Integer.parseInt(request.getParameter("gradeId"))));
+		employe.setEntreprise(entrepriseRepository.findOne(Integer.parseInt(request.getParameter("entrepriseId"))));
+		employe.setProfilRemuneration(profilRepository.findOne(Integer.parseInt(request.getParameter("profilId"))));
+
+		remunerationEmployeRepository.save(employe);
+
 	}
-	
-	
+
 	@RequestMapping(method = RequestMethod.GET, path = "/lister")
 	public ModelAndView listerEmploye() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("employes/listerEmployes");
-		mv.addObject("listeEmployes", remunerationEmployeRepository.findAll());		
-		//entrepriseRepository.findAll().forEach(System.out::println);
+		mv.addObject("listeEmployes", remunerationEmployeRepository.findAll());
+
 		return mv;
 	}
 

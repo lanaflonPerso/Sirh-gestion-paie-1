@@ -27,6 +27,7 @@ public class RemunerationEmploye {
 	@JoinColumn(name="GRD_ID")
 	private Grade grade;
 	
+	
 	public String getMatricule() {
 		return matricule;
 	}
